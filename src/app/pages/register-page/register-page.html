@@ -1,0 +1,62 @@
+<div class="content-container flex justify-center">
+  <p-card class="w-full max-w-md mt-10" header="Registre-se">
+    <form
+      [formGroup]="registerForm"
+      (ngSubmit)="submitForm()"
+      class="space-y-4 mt-6 flex flex-col gap-4"
+    >
+      <div class="content-forms">
+        <p-floatlabel>
+          <input
+            type="text"
+            id="username"
+            pInputText
+            formControlName="username"
+          />
+          <label for="username">Nome</label>
+        </p-floatlabel>
+        @if(registerForm.controls.username.errors?.['required'] &&
+        registerForm.controls.username.touched) {
+        <small class="text-red-500"> O nome é obrigatório. </small>
+        }
+      </div>
+      <div class="content-forms">
+        <p-floatlabel>
+          <input type="email" id="email" pInputText formControlName="email" />
+          <label for="email">Email</label>
+        </p-floatlabel>
+        @if(registerForm.controls.email.errors?.['required'] &&
+        registerForm.controls.email.touched) {
+        <small class="text-red-500"> O email é obrigatório. </small>
+        } @if(registerForm.controls.email.errors?.['email'] &&
+        registerForm.controls.email.touched) {
+        <small class="text-red-500">
+          O email deve ser um endereço de email válido.
+        </small>
+        }
+      </div>
+      <div class="content-forms">
+        <p-floatlabel>
+          <input
+            minlength="6"
+            type="password"
+            id="password"
+            pInputText
+            formControlName="password"
+          />
+          <label for="password">Senha</label>
+        </p-floatlabel>
+        @if(registerForm.controls.password.errors?.['required'] &&
+        registerForm.controls.password.touched) {
+        <small class="text-red-500"> A senha é obrigatória. </small>
+        } @if(registerForm.controls.password.errors?.['minlength'] &&
+        registerForm.controls.password.touched) {
+        <small class="text-red-500">
+          A senha deve ter pelo menos 6 caracteres.
+        </small>
+        }
+      </div>
+      <p-button [disabled]="registerForm.invalid" label="registrar" />
+    </form>
+  </p-card>
+</div>
