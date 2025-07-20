@@ -4,5 +4,6 @@ export const registerRoutes = [
   {
     path: '',
     component: RegisterPage,
+    title: 'iStorage - registro',
   },
 ];

@@ -4,5 +4,6 @@ export const loginRoutes = [
   {
     path: '',
     component: LoginPage,
+    title: 'iStorage - login',
   },
 ];
