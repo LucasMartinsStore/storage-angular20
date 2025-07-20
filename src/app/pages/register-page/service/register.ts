@@ -13,7 +13,10 @@ export class Register {
   readonly ENDPOINT = environment.apiUrl;
   private _httpClient = inject(HttpClient);
 
-  registerUser(user: UserPayload): void {
-    this._httpClient.post<UserRegister>(`${this.ENDPOINT}/users`, user);
+  registerUser(user: UserPayload) {
+    return this._httpClient.post<UserRegister[]>(
+      `${this.ENDPOINT}/users`,
+      user
+    );
   }
 }

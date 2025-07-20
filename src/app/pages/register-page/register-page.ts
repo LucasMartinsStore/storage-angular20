@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { InputTextModule } from 'primeng/inputtext';
 import {
   FormControl,
@@ -10,7 +10,8 @@ import {
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
-import { MessageError } from '../../shared/message-error/message-error';
+import { Register } from './service/register';
+import { MessageSuccess } from '../../shared/message-success/message-success';
 
 @Component({
   selector: 'app-register-page',
@@ -20,11 +21,19 @@ import { MessageError } from '../../shared/message-error/message-error';
     InputTextModule,
     CardModule,
     ButtonModule,
+    MessageSuccess,
   ],
   templateUrl: './register-page.html',
   styleUrl: './register-page.scss',
 })
 export class RegisterPage {
+  isMessageSuccess = false;
+  isMessageError = false;
+
+  messageSuccess = 'Registro realizado com sucesso!';
+
+  private _registerService = inject(Register);
+
   registerForm = new FormGroup({
     username: new FormControl('', {
       validators: [Validators.required],
@@ -41,12 +50,17 @@ export class RegisterPage {
   });
 
   submitForm() {
-    if (this.registerForm.valid) {
-      const formData = this.registerForm.value;
-      console.log('Form submitted:', formData);
-      // Here you can handle the form submission, e.g., send it to a server
-    } else {
-      console.log('Form is invalid');
-    }
+    const formData = this.registerForm.getRawValue();
+    this._registerService.registerUser(formData).subscribe({
+      next: () => {
+        this.isMessageSuccess = true;
+        this.isMessageError = false;
+        this.registerForm.reset();
+      },
+      error: () => {
+        this.isMessageError = true;
+        this.isMessageSuccess = false;
+      },
+    });
   }
 }
