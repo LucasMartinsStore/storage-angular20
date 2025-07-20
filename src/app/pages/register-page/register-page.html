@@ -1,5 +1,16 @@
-<div class="content-container flex justify-center">
-  <p-card class="w-full max-w-md mt-10" header="Registre-se">
+<div
+  class="content-container flex flex-col items-center justify-center min-h-screen"
+>
+  @if (isMessageSuccess) {
+  <div class="flex justify-center w-full mb-4">
+    <app-message-success
+      [successMessage]="messageSuccess"
+    ></app-message-success>
+  </div>
+
+  }
+
+  <p-card class="w-full max-w-md" header="Registre-se">
     <form
       [formGroup]="registerForm"
       (ngSubmit)="submitForm()"
@@ -56,7 +67,11 @@
         </small>
         }
       </div>
-      <p-button [disabled]="registerForm.invalid" label="registrar" />
+      <p-button
+        type="submit"
+        [disabled]="registerForm.invalid"
+        label="registrar"
+      />
     </form>
   </p-card>
 </div>
